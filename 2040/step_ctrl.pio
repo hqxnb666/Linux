@@ -1,0 +1,41 @@
+;       3us
+;      +----+                      +----+
+;      |    |                      |    |
+; -----+    +----------------------+    +------
+;      |<----- osr*0.1 + 2.6 ----->|
+;
+; 对于HR4988电机驱动芯片，高电平和低电平时间都需要 >= 1us
+; 对于HR4988电机驱动芯片，DIR to STEP setup time tDSU >= 200ns
+; 对于TMC2209电机驱动芯片，高电平和低电平时间都需要 >= 0.1us
+; 对于TMC2209电机驱动芯片，DIR to STEP setup time tDSU >= 20ns
+
+.program step_ctrl
+.wrap_target
+    pull block
+    out y, 31   ; 设置低电平时间，最长214s
+    out pins, 1 ; 设置DIR
+    set x, 18   ; 高电平时间 = 1.8us + 0.2us
+    set pins, 1
+loop1:
+    jmp x-- loop1
+    set pins, 0
+loop2:
+    jmp y-- loop2
+.wrap
+
+
+% c-sdk {
+static inline void step_ctrl_program_init(PIO pio, uint sm, uint offset, uint step_pin, uint dir_pin) {
+   pio_gpio_init(pio, step_pin);
+   pio_gpio_init(pio, dir_pin);
+   pio_sm_set_consecutive_pindirs(pio, sm, step_pin, 1, true);
+   pio_sm_set_consecutive_pindirs(pio, sm, dir_pin, 1, true);
+   pio_sm_config c = step_ctrl_program_get_default_config(offset);
+   sm_config_set_set_pins(&c, step_pin, 1);
+   sm_config_set_out_pins(&c, dir_pin, 1);
+   float div = clock_get_hz(clk_sys) / 10000000.0f;
+   sm_config_set_clkdiv(&c, div);
+   pio_sm_init(pio, sm, offset, &c);
+   pio_sm_set_enabled(pio, sm, true);
+}
+%}
