@@ -4,7 +4,7 @@
 #define Length 101
 #define Style '='
 const char *label = "|/-\\";
-// void  ProcBar()
+// I printf("[%-100s][%.1lf%%][%c]\r",bar,rate,label[cnt%len]);void  ProcBar()
 // {
 //  char bar[Length];
 //  int len = strlen(label);
@@ -18,7 +18,7 @@ const char *label = "|/-\\";
 //    usleep(10000);
 //
 //  }
-// }
+}a
 
 
  void  ProcBar(double total, double current)

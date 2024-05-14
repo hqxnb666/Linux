@@ -1,19 +1,12 @@
-bin=mycode
-src=code.c
-bin1=mytest
-src1=test.c
-$(bin1):$(src1)
-
-	@gcc -o $@ $^
-	@echo "complier $(src1) to $(bin1) .." 
+bin=mytestStatus
+src=testStatus.c
 $(bin):$(src)
 	@gcc -o $@ $^
 	@echo "complier $(src) to $(bin) .." 
 
 .PHONY:clean
 clean:
-	@rm -rf mycode
-	@rm -rf mytest 
+	@rm -rf $@
 	@echo "delete complete!"
 
 
