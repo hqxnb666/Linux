@@ -1,15 +1,34 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
-#include <unistd.h>
-int main()
+
+prin(int n)
+
 {
-int cnt = 10;
-while(cnt >= 0)
-{
-  printf("倒计时：%2d\r",cnt );
-  fflush(stdout);
-  cnt--;
-  sleep(1);
+
+    if (n == 0)
+
+        return;
+
+    int bbb = n % 10;
+
+    prin(n / 10);
+
+    printf("%d", bbb);
+
 }
-printf("\n");
-  return 0;
+
+int main()
+
+{
+
+    int num = 12345;
+
+
+
+    prin(num);
+
+    printf("\n");
+
+    return 0;
 }
