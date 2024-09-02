@@ -1,4 +1,5 @@
 myshell:myshell.c
-	gcc -o $@ $^
-.PHONY:clean
-	clean: rm -f myshell
+	gcc -std=c99 -o $@ $^
+.PHONY: clean
+	clean:
+	rm	-f	myshell
