@@ -1,0 +1,20 @@
+ double NormalizeAngle(double lateral_distance,float v_m)
+    {
+        // 计算夹角
+        double angle;
+        double k=3;
+        std::cout << "v:" << v_m << std::endl; 
+        //float Angle();
+        angle = atan(k * lateral_distance / v_m);
+        std::cout<<"Angle:"<<angle<<std::endl;
+		
+	
+        // 角度规范化函数
+        angle = fmod(angle + M_PI, 2 * M_PI);
+        if (angle < 0.0)
+        {
+            angle += 2.0 * M_PI;
+        }
+        angle -= M_PI;
+        return angle;
+    }
