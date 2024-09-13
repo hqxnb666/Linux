@@ -18,3 +18,14 @@
         angle -= M_PI;
         return angle;
     }
+[ INFO] [1726203445.490096528]: Calculated lateral distance: 0.000000, Streeing angle: -nan
+[ INFO] [1726203445.490130818]: Adjusting steering by angle: -nan degrees
+path_callback triggered with 3 points.
+[ INFO] [1726203445.510203225]: nearest point index: 0,distance squared: 0.000000
+v:0
+Angle:-nan
+[ INFO] [1726203445.510253648]: Calculated lateral distance: 0.000000, Streeing angle: -nan
+[ INFO] [1726203445.510269501]: Adjusting steering by angle: -nan degrees
+^C[control_demo_node-1] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
