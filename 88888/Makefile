@@ -1,9 +1,3 @@
-###############################################################################
-# Makefile for Compiling TimeLib, Server, and Client Modules
-#
-# Description:
-#     This Makefile is designed to compile various components, including:
-#     - TimeLib: A library for time-related operations
 #     - FIFO Order Server: Processes client requests in FIFO order
 #     - FIFO Order Client: Sends requests to the server
 #
@@ -36,7 +30,6 @@
 #
 ###############################################################################
 
-
 TARGETS = server_multi
 LIBS = timelib
 LDFLAGS = -lm -lpthread
@@ -45,16 +38,20 @@ BUILD_TARGETS = $(addprefix $(BUILDDIR)/,$(TARGETS))
 OBJS = $(addprefix $(BUILDDIR)/,$(addsuffix .o,$(TARGETS) $(LIBS)))
 LIBOBJS = $(addprefix $(BUILDDIR)/,$(addsuffix .o,$(LIBS)))
 
+# 添加编译选项
+CFLAGS = -W -Wall -std=c99
+
 all: $(BUILD_TARGETS)
 
 $(BUILD_TARGETS): $(BUILDDIR) $(OBJS)
-	gcc -o $@ $@.o $(LIBOBJS) $(LDFLAGS) -W -Wall
+	gcc -o $@ $@.o $(LIBOBJS) $(LDFLAGS) $(CFLAGS)
 
 $(BUILDDIR):
 	mkdir $(BUILDDIR)
 
 $(BUILDDIR)/%.o: %.c
-	gcc -o $@ -c $< -W -Wall
+	gcc -o $@ -c $< $(CFLAGS)
 
 clean:
 	rm *~ -rf $(BUILDDIR)
+

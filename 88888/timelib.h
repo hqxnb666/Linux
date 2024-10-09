@@ -22,7 +22,7 @@
 *     refer to the accompanying documentation for detailed usage instructions.
 *
 *******************************************************************************/
-
+#define _POSIX_C_SOURCE 199309L 
 #include <stdio.h>
 #include <string.h>
 #include <time.h>

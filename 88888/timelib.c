@@ -23,8 +23,8 @@
 *
 *******************************************************************************/
 
+#define _POSIX_C_SOURCE 199309L
 #include "timelib.h"
-
 /* Return the number of clock cycles elapsed when waiting for
  * wait_time seconds using sleeping functions */
 uint64_t get_elapsed_sleep(long sec, long nsec)
