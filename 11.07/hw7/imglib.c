@@ -221,13 +221,16 @@ struct image* blurImage(const struct image* img, uint8_t * err) {
                 uint32_t sumR = 0, sumG = 0, sumB = 0;
 
                 // Convolve with the kernel
-                for (int ky = -1; ky <= 1; ky++) {
-                    for (int kx = -1; kx <= 1; kx++) {
+                {
+                  int ky,kx=0;
+                for ( ky = -1; ky <= 1; ky++) {
+                    for ( kx = -1; kx <= 1; kx++) {
 			    uint32_t pixel = pix(img, x + kx, y + ky);
 			    sumR += (pixel >> 16) & 0xFF;
 			    sumG += (pixel >> 8) & 0xFF;
 			    sumB += pixel & 0xFF;
                     }
+                }
                 }
 
                 // Average the sums to get the new pixel value
@@ -289,16 +292,17 @@ struct image* sharpenImage(const struct image* img, uint8_t * err) {
                 int kernel[3][3] = { {-1, -1, -1},
                                      {-1,  9, -1},
                                      {-1, -1, -1} };
-
-                for (int ky = -1; ky <= 1; ky++) {
-                    for (int kx = -1; kx <= 1; kx++) {
+                {
+                  int ky,kx=0;
+                for ( ky = -1; ky <= 1; ky++) {
+                    for ( kx = -1; kx <= 1; kx++) {
 			    uint32_t pixel = pix(img, x + kx, y + ky);
 			    sumR += ((pixel >> 16) & 0xFF) * kernel[ky + 1][kx + 1];
 			    sumG += ((pixel >> 8) & 0xFF) * kernel[ky + 1][kx + 1];
 			    sumB += (pixel & 0xFF) * kernel[ky + 1][kx + 1];
                     }
                 }
-
+                }
                 /* Clip the values to [0, 255] */
                 sumR = (sumR > 255) ? 255 : (sumR < 0) ? 0 : sumR;
                 sumG = (sumG > 255) ? 255 : (sumG < 0) ? 0 : sumG;
@@ -361,15 +365,17 @@ struct image* detectVerticalEdges(const struct image* img, uint8_t * err) {
                 int sumR = 0, sumG = 0, sumB = 0;
 
                 // Convolve with the kernel
-                for (int ky = -1; ky <= 1; ky++) {
-                    for (int kx = -1; kx <= 1; kx++) {
+                {
+                  int ky,kx=0;
+                for (ky = -1; ky <= 1; ky++) {
+                    for ( kx = -1; kx <= 1; kx++) {
 			    uint32_t pixel = pix(img, x + kx, y + ky);
 			    sumR += ((pixel >> 16) & 0xFF) * kernel[ky + 1][kx + 1];
 			    sumG += ((pixel >> 8) & 0xFF) * kernel[ky + 1][kx + 1];
 			    sumB += (pixel & 0xFF) * kernel[ky + 1][kx + 1];
                     }
                 }
-
+                }
                 // Clip the values to [0, 255]
                 sumR = (sumR > 255) ? 255 : (sumR < 0) ? 0 : sumR;
                 sumG = (sumG > 255) ? 255 : (sumG < 0) ? 0 : sumG;
@@ -431,16 +437,17 @@ struct image* detectHorizontalEdges(const struct image* img, uint8_t * err) {
             } else {
                 int sumR = 0, sumG = 0, sumB = 0;
 
-                // Convolve with the kernel
-                for (int ky = -1; ky <= 1; ky++) {
-                    for (int kx = -1; kx <= 1; kx++) {
+                {
+                  int ky,kx=0;
+                for (ky = -1; ky <= 1; ky++) {
+                    for ( kx = -1; kx <= 1; kx++) {
 			    uint32_t pixel = pix(img, x + kx, y + ky);
 			    sumR += ((pixel >> 16) & 0xFF) * kernel[ky + 1][kx + 1];
 			    sumG += ((pixel >> 8) & 0xFF) * kernel[ky + 1][kx + 1];
 			    sumB += (pixel & 0xFF) * kernel[ky + 1][kx + 1];
                     }
                 }
-
+                }
                 // Clip the values to [0, 255]
                 sumR = (sumR > 255) ? 255 : (sumR < 0) ? 0 : sumR;
                 sumG = (sumG > 255) ? 255 : (sumG < 0) ? 0 : sumG;
@@ -554,7 +561,8 @@ uint8_t saveBMP(const char* filename, const struct image* img) {
 						   (pixel >> 16) & 0xFF };
 			write(fd, color, sizeof(unsigned char) * 3);
 		}
-		for (int i = 0; i < padding; i++) {
+    int i =0;
+		for (i = 0; i < padding; i++) {
 			unsigned char pad = 0;
 			write(fd, &pad, 1);
 		}
